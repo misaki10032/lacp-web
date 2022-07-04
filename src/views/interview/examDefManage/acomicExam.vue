@@ -19,7 +19,7 @@
                 <el-table-column width="200" label="题类型">
                     <template slot-scope="scope">
                         <el-tag type="success">
-                            {{scope.row.values.label.display}}
+                            {{ scope.row.values.label.display }}
                         </el-tag>
                     </template>
                 </el-table-column>
@@ -41,8 +41,24 @@
             </el-pagination>
         </div>
 
-        <el-dialog title="原子指标名" :visible.sync="dialogFormVisible">
-            <el-input v-model="newlabel" placeholder="多个用空格隔开" clearable></el-input>
+        <el-dialog center width="430px" modal title="新增题" :visible.sync="dialogFormVisible">
+            <el-form :model="form">
+                <el-form-item label="题库名称" :label-width="formLabelWidth" required>
+                    <el-input style="width: 300px;" clearable placeholder="请输入内容" maxlength="15" onchange="alters" onblur="alters" prefix-icon="el-icon-receiving" v-model="title"></el-input>
+                </el-form-item>
+                <el-form-item label="题库类型" required :label-width="formLabelWidth">
+                    <el-select style="width: 300px;" multiple filterable clearable  collapse-tags v-model="values" placeholder="请选择">
+                        <el-option v-for="item in options" :key="item.value" :label="item.label"
+                                   :value="item.value"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item required label="是否显示">
+                    <el-switch v-model="enable" inactive-color="red"></el-switch>
+                </el-form-item>
+                <el-form-item required label="是否停用">
+                    <el-switch inactive-color="red" v-model="showAble"></el-switch>
+                </el-form-item>
+            </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">取 消</el-button>
                 <el-button type="primary" @click="add()">确 定</el-button>
@@ -56,6 +72,8 @@
     export default {
         data() {
             return {
+                enable: true,
+                showAble: true,
                 form: {
                     search: "",
                     type: 1,
@@ -70,14 +88,39 @@
                     pageSize: 10
                 },
                 ids: [],
+                values: [],
+                options: [{
+                    value: '1',
+                    label: 'java'
+                }, {
+                    value: '2',
+                    label: 'mysql'
+                }, {
+                    value: '3',
+                    label: 'python'
+                }, {
+                    value: '4',
+                    label: 'python'
+                }, {
+                    value: '5',
+                    label: 'php'
+                }],
                 dialogFormVisible: false,
-                newlabel: ""
+                title: ""
             }
         },
         mounted() {
             this.findLabelList(1, this.pageInfo.pageSize);
         },
         methods: {
+            alters(){
+                if (this.title.length > 15){
+                    this.$message({
+                        message: '警告哦,题名太长啦!',
+                        type: 'warning'
+                    });
+                }
+            },
             findLabelList(page, limit) {
                 var that = this;
                 that.form.pageNum = page;
@@ -197,3 +240,9 @@
         }
     }
 </script>
+
+<style>
+    .dialiog {
+        margin: 30px;
+    }
+</style>
