@@ -41,13 +41,13 @@
             </el-pagination>
         </div>
 
-        <el-dialog center width="430px" modal title="新增题" :visible.sync="dialogFormVisible">
+        <el-dialog center width="440px" modal title="新增题" :visible.sync="dialogFormVisible">
             <el-form :model="form">
                 <el-form-item label="题库名称" :label-width="formLabelWidth" required>
-                    <el-input style="width: 300px;" clearable placeholder="请输入内容" maxlength="15" onchange="alters" onblur="alters" prefix-icon="el-icon-receiving" v-model="title"></el-input>
+                    <el-input style="width: 310px;" clearable placeholder="请输入内容" show-word-limit maxlength="15" prefix-icon="el-icon-receiving" v-model="title"></el-input>
                 </el-form-item>
                 <el-form-item label="题库类型" required :label-width="formLabelWidth">
-                    <el-select style="width: 300px;" multiple filterable clearable  collapse-tags v-model="values" placeholder="请选择">
+                    <el-select style="width: 310px;" multiple filterable clearable  collapse-tags v-model="values" placeholder="请选择">
                         <el-option v-for="item in options" :key="item.value" :label="item.label"
                                    :value="item.value"></el-option>
                     </el-select>
@@ -113,14 +113,6 @@
             this.findLabelList(1, this.pageInfo.pageSize);
         },
         methods: {
-            alters(){
-                if (this.title.length > 15){
-                    this.$message({
-                        message: '警告哦,题名太长啦!',
-                        type: 'warning'
-                    });
-                }
-            },
             findLabelList(page, limit) {
                 var that = this;
                 that.form.pageNum = page;
