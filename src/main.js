@@ -13,8 +13,8 @@ Vue.use(VueCookies)
 Vue.use(ElementUI);
 Vue.use(router);
 
-axios.defaults.baseURL = "http://124.222.34.234:27314/api";
-// axios.defaults.baseURL = "http://localhost:27314/api";
+// axios.defaults.baseURL = "http://124.222.34.234:27314/api";
+axios.defaults.baseURL = "http://localhost:8080/api/lacp";
 
 axios.interceptors.request.use(config => {
     config.headers.token = window.sessionStorage.getItem('sso_uid');

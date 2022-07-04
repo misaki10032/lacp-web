@@ -10,70 +10,82 @@ import atomic_v from "../views/basicDatebase/labelView/atomic.vue"
 import complex_v from "../views/basicDatebase/labelView/complex.vue"
 import portrait_v from "../views/basicDatebase/labelView/portrait.vue"
 import basicmain from "../views/basicmain.vue"
+import itv_main from "../views/interview/main"
+import itvexamdef from "../views/interview/examDefManage/acomicExam"
 
 Vue.use(router)
 var rout = new router({
-	routes: [{
-		path: '/login',
-		name: 'login',
-		component: login
-	}, {
-		path: '/welcome',
-		name: 'basicmain',
-		component: basicmain,
-		children: []
-	}, {
-		path: '/dbmain',
-		name: 'dbmain',
-		redirect: "/mainlist",
-		component: dbmain,
-		children: [{
-				path: "/mainlist",
-				component: mainlist
-			},
-			{
-				path: "/console",
-				component: console_v
-			},
-			{
-				path: "/db",
-				component: db_v
-			},
-			{
-				path: "/table",
-				component: table_v
-			},
-			{
-				path: "/atomic",
-				component: atomic_v
-			},
-			{
-				path: "/complex",
-				component: complex_v
-			},
-			{
-				path: "/portrait",
-				component: portrait_v
-			}
-		]
-	}, {
-		path: "/",
-		redirect: '/weclome'
-	}]
+    routes: [{
+        path: '/login',
+        name: 'login',
+        component: login
+    }, {
+        path: '/welcome',
+        name: 'basicmain',
+        component: basicmain,
+        children: []
+    }, {
+        path: '/dbmain',
+        name: 'dbmain',
+        redirect: "/mainlist",
+        component: dbmain,
+        children: [{
+            path: "/mainlist",
+            component: mainlist
+        },
+            {
+                path: "/console",
+                component: console_v
+            },
+            {
+                path: "/db",
+                component: db_v
+            },
+            {
+                path: "/table",
+                component: table_v
+            },
+            {
+                path: "/atomic",
+                component: atomic_v
+            },
+            {
+                path: "/complex",
+                component: complex_v
+            },
+            {
+                path: "/portrait",
+                component: portrait_v
+            }
+        ]
+    }, {
+        path: "/",
+        redirect: '/weclome'
+    }, {
+        path: "/itvmain",
+        name: "itvmain",
+        component: itv_main,
+        children: [
+            {
+                path: "/itvexamdef",
+                component: itvexamdef
+            }
+        ]
+    }]
 })
 
 export default rout;
 
 rout.beforeEach((to, from, next) => {
-	if (to.path == '/login') {
-		return next();
-	} else {
-		const uid = sessionStorage.getItem("sso_uid");
-		console.log(uid)
-		if (uid == null) {
-			return next("/login");
-		} else {
-			next();
-		}
-	}
+    if (to.path == '/login') {
+        return next();
+    } else {
+        const uid = sessionStorage.getItem("sso_uid");
+        console.log(uid)
+        if (uid == null) {
+            return next("/login");
+        } else {
+            next();
+        }
+    }
 })

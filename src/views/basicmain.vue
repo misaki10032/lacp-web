@@ -5,14 +5,14 @@
 			<el-menu-item index="/welcome">首页</el-menu-item>
 			<el-submenu index="/welcome">
 				<template slot="title">面试题</template>
-				<el-menu-item index="/welcome">选项1</el-menu-item>
-				<el-menu-item index="/welcome">选项2</el-menu-item>
-				<el-menu-item index="/welcome">选项3</el-menu-item>
-				<el-submenu index="/welcome">
+				<el-menu-item index="/itvmain">选项1</el-menu-item>
+				<el-menu-item index="/itvmain">选项2</el-menu-item>
+				<el-menu-item index="/itvmain">选项3</el-menu-item>
+				<el-submenu index="/itvmain">
 					<template slot="title">选项4</template>
-					<el-menu-item index="/welcome">选项1</el-menu-item>
-					<el-menu-item index="/welcome">选项2</el-menu-item>
-					<el-menu-item index="/welcome">选项3</el-menu-item>
+					<el-menu-item index="/itvmain">选项1</el-menu-item>
+					<el-menu-item index="/itvmain">选项2</el-menu-item>
+					<el-menu-item index="/itvmain">选项3</el-menu-item>
 				</el-submenu>
 			</el-submenu>
 			<el-menu-item index="/welcome">分享平台</el-menu-item>
