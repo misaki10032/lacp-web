@@ -11,7 +11,9 @@
             <el-button type="primary" @click="dialogFormVisible = true">新增题库</el-button>
         </div>
         <div>
-            <el-table :data="labels" style="width: 100%;" ref="multipleTable">
+            <el-table v-loading="this.labels.length > 0 ? false : true" element-loading-text="拼命加载中"
+                      element-loading-spinner="el-icon-loading" :data="labels" style="width: 100%;"
+                      ref="multipleTable">
                 <el-table-column type="selection" width="55"></el-table-column>
                 <el-table-column fixed label="题ID" prop="refpk" sortable width="100"></el-table-column>
                 <el-table-column label="题名" prop="refname" width="150"></el-table-column>
