@@ -131,7 +131,7 @@
             findLabelList(page, limit) {
                 this.form.pageNum = page;
                 this.form.pageSize = limit;
-                this.$axios.get("/edc/queryAllExam/" + this.form.pageNum + "/" + this.form.pageSize).then(res => {
+                this.$axiositv.get("/edc/queryAllExam/" + this.form.pageNum + "/" + this.form.pageSize).then(res => {
                     if (res.data.responseState === 200) {
                         this.labels = res.data.responseData.tagsList;
                         if (res.data.responseData.pageInfo == null) {
@@ -151,7 +151,7 @@
                 this.findLabelList(this.pageInfo.pageNum, this.pageInfo.pageSize);
             },
             changeAble(row) {
-                this.$axios.post("/edc/updateExam", {
+                this.$axiositv.post("/edc/updateExam", {
                     id: row.refpk,
                     labelPk: row.values.label.value,
                     title: row.refname,
@@ -180,7 +180,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$axios.get("/edc/deleteExam/" + row.refpk).then(res => {
+                    this.$axiositv.get("/edc/deleteExam/" + row.refpk).then(res => {
                         if (res.data.responseState === 200) {
                             this.$notify({
                                 title: '删除成功',
@@ -214,7 +214,7 @@
                 // labekPk = labekPk.substr(0, labekPk.length - 1)
                 console.log(labekPk)
                 console.log(this.title)
-                this.$axios.post("/edc/insertExam", {
+                this.$axiositv.post("/edc/insertExam", {
                     labelPk: labekPk,
                     title: this.title,
                     showAble: this.showAble,

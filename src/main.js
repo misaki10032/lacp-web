@@ -5,16 +5,18 @@ import VueCookies from 'vue-cookies'
 import 'element-ui/lib/theme-chalk/index.css'
 import router from './router'
 import axios from 'axios'
+import axios_interview from 'axios'
 
 
 Vue.prototype.$axios = axios
+Vue.prototype.$axiositv = axios_interview
 Vue.config.productionTip = false
 Vue.use(VueCookies)
 Vue.use(ElementUI);
 Vue.use(router);
 
-// axios.defaults.baseURL = "http://124.222.34.234:27314/api";
-axios.defaults.baseURL = "http://124.222.34.234:27400/api/lacp";
+axios.defaults.baseURL = "http://124.222.34.234:27314/api";
+axios_interview.defaults.baseURL = "http://124.222.34.234:27400/api/lacp";
 
 axios.interceptors.request.use(config => {
     config.headers.token = window.sessionStorage.getItem('sso_uid');
