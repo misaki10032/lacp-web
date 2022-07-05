@@ -130,7 +130,7 @@
                 this.form.pageNum = page;
                 this.form.pageSize = limit;
                 this.$axios.get("/edc/queryAllExam/" + this.form.pageNum + "/" + this.form.pageSize).then(res => {
-                    if (res.data.responseState == 200) {
+                    if (res.data.responseState === 200) {
                         this.labels = res.data.responseData.tagsList;
                         if (res.data.responseData.pageInfo == null) {
                             this.pageInfo.total = 0;
@@ -157,7 +157,7 @@
                     modifier: window.sessionStorage.getItem("sso_uid"),
                     enAble: row.enAble
                 }).then(res => {
-                    if (res.data.responseState == 200) {
+                    if (res.data.responseState === 200) {
                         this.$notify({
                             title: '更新成功',
                             message: "更新-" + row.refname,
@@ -179,7 +179,7 @@
                     type: 'warning'
                 }).then(() => {
                     this.$axios.get("/edc/deleteExam/" + row.refpk).then(res => {
-                        if (res.data.responseState == 200) {
+                        if (res.data.responseState === 200) {
                             this.$notify({
                                 title: '删除成功',
                                 message: "删除-" + row.refname,
@@ -218,7 +218,7 @@
                     showAble: this.showAble,
                     enAble: this.enAble
                 }).then(res => {
-                    if (res.data.responseState == 200) {
+                    if (res.data.responseState === 200) {
                         this.$notify({
                             title: '新建成功',
                             message: "新增-" + this.title,
@@ -241,7 +241,5 @@
 </script>
 
 <style>
-    .dialiog {
-        margin: 30px;
-    }
+
 </style>
