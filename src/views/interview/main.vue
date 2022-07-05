@@ -9,20 +9,17 @@
                     <el-submenu index="1">
                         <template slot="title"><i class="el-icon-paperclip"></i>题库管理</template>
                         <el-menu-item-group>
-                            <template slot="title">题库类型</template>
-                            <el-menu-item index="/itvexamdef">原子标签题库</el-menu-item>
-                            <el-menu-item index="/complex">复合标签题库</el-menu-item>
+                            <template slot="title">exam</template>
+                            <el-menu-item index="/itvexamdef">题库管理</el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
                     <el-submenu index="2">
                         <template slot="title"><i class="el-icon-s-data"></i>内容管理</template>
                         <el-menu-item-group>
-                            <template slot="title">内容管理</template>
-                            <el-menu-item index="/db">原子标签内容</el-menu-item>
-                            <el-menu-item index="/table">复合标签题库</el-menu-item>
+                            <template slot="title">value</template>
+                            <el-menu-item index="/db">内容管理</el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
-
                 </el-menu>
             </el-aside>
 
@@ -56,7 +53,7 @@
         },
         methods: {
             toMainList() {
-                this.$router.push("/mainlist")
+                this.$router.push("/itvmain")
             },
             handleSelect(key, keyPath) {
                 console.log(key, keyPath);

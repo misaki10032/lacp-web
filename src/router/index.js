@@ -11,7 +11,7 @@ import complex_v from "../views/basicDatebase/labelView/complex.vue"
 import portrait_v from "../views/basicDatebase/labelView/portrait.vue"
 import basicmain from "../views/basicmain.vue"
 import itv_main from "../views/interview/main"
-import itvexamdef from "../views/interview/examDefManage/acomicExam"
+import itvexamdef from "../views/interview/examDefManage/exam"
 
 Vue.use(router)
 var rout = new router({
