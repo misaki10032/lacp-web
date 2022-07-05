@@ -2,13 +2,13 @@
     <div>
         <el-breadcrumb style="margin-bottom: 20px">
             <el-breadcrumb-item :to="{ path: '/welcome' }">主站</el-breadcrumb-item>
-            <el-breadcrumb-item :to="{ path: '/itvmain' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item :to="{ path: '/itvexamdef' }">首页</el-breadcrumb-item>
             <el-breadcrumb-item :to="{ path: '/itvexamdef' }">题库管理</el-breadcrumb-item>
         </el-breadcrumb>
         <div>
             <el-input v-model="form.search" placeholder="请输入题名" @change="findLabelList(1, 10)"
                       style="width: 18.75rem;margin-right: 20px;" clearable></el-input>
-            <el-button type="primary" @click="dialogFormVisible = true">新增题库</el-button>
+            <el-button type="primary" v-if="ssocontrol" @click="dialogFormVisible = true">新增题库</el-button>
         </div>
         <div>
             <el-table v-loading="this.labels.length > 0 ? false : true" element-loading-text="拼命加载中"
@@ -121,6 +121,7 @@
                     label: 'php'
                 }],
                 dialogFormVisible: false,
+                ssocontrol: false,
                 title: ""
             }
         },
@@ -133,6 +134,7 @@
                 this.form.pageSize = limit;
                 this.$axiositv.get("/edc/queryAllExam/" + this.form.pageNum + "/" + this.form.pageSize).then(res => {
                     if (res.data.responseState === 200) {
+                        this.ssocontrol = res.data.responseData.ssoadmin
                         this.labels = res.data.responseData.tagsList;
                         if (res.data.responseData.pageInfo == null) {
                             this.pageInfo.total = 0;
