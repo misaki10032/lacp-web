@@ -38,7 +38,9 @@
 				}
 			}
 		},
-		mounted() {},
+		mounted() {
+			// 请求sso接口
+		},
 		methods: {
 			//登录
 			login() {
