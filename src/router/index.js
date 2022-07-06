@@ -12,6 +12,7 @@ import portrait_v from "../views/basicDatebase/labelView/portrait.vue"
 import basicmain from "../views/basicmain.vue"
 import itv_main from "../views/interview/main"
 import itvexamdef from "../views/interview/examDefManage/exam"
+import botmsg_v from "../views/basicDatebase/botMsgView/botmsg.vue"
 
 Vue.use(router)
 var rout = new router({
@@ -56,6 +57,10 @@ var rout = new router({
             {
                 path: "/portrait",
                 component: portrait_v
+            },
+            {
+                path: "/botmsg",
+                component: botmsg_v
             }
         ]
     }, {

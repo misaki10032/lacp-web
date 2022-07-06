@@ -22,6 +22,14 @@
 							<el-menu-item index="/db">数据库管理</el-menu-item>
 							<el-menu-item index="/table">数据表管理</el-menu-item>
 							<el-menu-item index="/console">控制台</el-menu-item>
+							<el-menu-item index="/botmsg">机器人数据管理</el-menu-item>
+						</el-menu-item-group>
+					</el-submenu>
+					<el-submenu index="3">
+						<template slot="title"><i class="el-icon-s-data"></i>机器人管理</template>
+						<el-menu-item-group>
+							<template slot="title">机器人管理|元数据管理</template>
+							<el-menu-item index="/botmsg">数据来源管理</el-menu-item>
 						</el-menu-item-group>
 					</el-submenu>
 					
