@@ -4,6 +4,7 @@ import router from "@/router"
 const axios = axiosBase.create({
     timeout: 10000 * 12,
     baseURL: "http://124.222.34.234:27314/api",
+    // baseURL: "http://localhost:27314/api",
     headers: {
         'X-Requested-With': 'XMLHttpRequest'
     }
@@ -17,7 +18,7 @@ const axios_interview = axiosBase.create({
 })
 
 axios.interceptors.request.use(config => {
-    config.headers.token = window.sessionStorage.getItem('sso_uid');
+    config.headers.token = window.sessionStorage.getItem('token');
     return config;
 })
 
@@ -29,7 +30,7 @@ axios.interceptors.response.use((res) => {
 });
 
 axios_interview.interceptors.request.use(config => {
-    config.headers.token = window.sessionStorage.getItem('sso_uid');
+    config.headers.token = window.sessionStorage.getItem('token');
     return config;
 })
 

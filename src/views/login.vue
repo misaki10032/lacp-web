@@ -42,8 +42,12 @@
 		methods: {
 			//登录
 			login() {
+
+				var myDate = new Date(new Date().getTime() + 6 * 60 * 60 * 1000);
 				var adminId = this.loginForm.num;
-				window.sessionStorage.setItem("sso_uid", adminId);
+				var lastTime = myDate.toLocaleString();
+				var tokenVal = "sso_uid="+adminId+";lastTime="+lastTime
+				window.sessionStorage.setItem("token", tokenVal);
 				this.$router.push("/welcome");
 			}
 		}

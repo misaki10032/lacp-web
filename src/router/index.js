@@ -80,11 +80,16 @@ rout.beforeEach((to, from, next) => {
     if (to.path == '/login') {
         return next();
     } else {
-        const uid = sessionStorage.getItem("sso_uid");
-        console.log(uid)
-        if (uid == null) {
+        const token = sessionStorage.getItem("token");
+        console.log(token)
+        if (token == null) {
             return next("/login");
         } else {
+            var lastTime = token.split(";")[1].split("=");
+            if (Date.parse(lastTime) < Date.parse(new Date())) {
+                alert("过期token")
+                return next("/login");
+            }
             next();
         }
     }
