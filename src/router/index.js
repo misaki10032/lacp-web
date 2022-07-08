@@ -13,6 +13,7 @@ import basicmain from "../views/basicmain.vue"
 import itv_main from "../views/interview/main"
 import itvexamdef from "../views/interview/examDefManage/exam"
 import botmsg_v from "../views/basicDatebase/botMsgView/botmsg.vue"
+import newsheadlines_v from "../views/basicDatebase/botMsgView/newsHeadlines.vue"
 
 Vue.use(router)
 var rout = new router({
@@ -61,6 +62,10 @@ var rout = new router({
             {
                 path: "/botmsg",
                 component: botmsg_v
+            },
+            {
+                path: "/newsheadlines",
+                component : newsheadlines_v
             }
         ]
     }, {

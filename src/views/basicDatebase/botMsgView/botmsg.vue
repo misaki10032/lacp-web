@@ -3,7 +3,7 @@
         <el-breadcrumb style="margin-bottom: 20px">
             <el-breadcrumb-item :to="{ path: '/welcome' }">主站</el-breadcrumb-item>
             <el-breadcrumb-item :to="{ path: '/mainlist' }">首页</el-breadcrumb-item>
-            <el-breadcrumb-item :to="{ path: '/botmsg' }">机器人消息管理</el-breadcrumb-item>
+            <el-breadcrumb-item :to="{ path: '/botmsg' }">问候语管理</el-breadcrumb-item>
         </el-breadcrumb>
         <div>
             <el-input v-model="form.search" placeholder="请输入标签名" @change="findMsgList(1, 10)"
@@ -14,7 +14,7 @@
         <div>
             <el-table :data="msgs" style="width: 100%;" ref="multipleTable">
                 <el-table-column type="selection" width="55"></el-table-column>
-                <el-table-column fixed label="标签ID" prop="id" sortable width="90"></el-table-column>
+                <el-table-column fixed label="消息ID" prop="id" sortable width="90"></el-table-column>
                 <el-table-column label="消息类型" prop="msgType" :formatter="typeformat" width="100"></el-table-column>
                 <el-table-column label="消息内容" :show-overflow-tooltip='true' prop="msgData" width="400">
                 </el-table-column>
