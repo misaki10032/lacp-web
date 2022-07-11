@@ -16,7 +16,10 @@
                 <el-table-column type="selection" width="55"></el-table-column>
                 <el-table-column fixed label="消息ID" prop="id" sortable width="90"></el-table-column>
                 <el-table-column label="消息类型" prop="msgType" :formatter="typeformat" width="100"></el-table-column>
-                <el-table-column label="消息内容" :show-overflow-tooltip='true' prop="msgData" width="400">
+                <el-table-column label="消息内容" :show-overflow-tooltip='true' width="400">
+                    <template slot-scope="scope">
+                        <div v-html="scope.row.msgData"></div>
+                    </template>
                 </el-table-column>
                 <el-table-column label="创建人" prop="createUser" width="100"></el-table-column>
                 <el-table-column label="创建日期" prop="createTime" width="200" :sortable="true"></el-table-column>

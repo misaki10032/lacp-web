@@ -32,7 +32,6 @@
 							<el-menu-item index="/newsheadlines">头条数据管理</el-menu-item>
 						</el-menu-item-group>
 					</el-submenu>
-					
 				</el-menu>
 			</el-aside>
 
