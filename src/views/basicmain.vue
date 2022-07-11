@@ -3,15 +3,10 @@
 		<el-menu router :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect"
 			background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
 			<el-menu-item index="/welcome">首页</el-menu-item>
+			<el-menu-item index="/index">主站</el-menu-item>
 			<el-submenu index="/welcome">
 				<template slot="title">面试题</template>
 				<el-menu-item index="/itvmain">面试管理</el-menu-item>
-<!--				<el-submenu index="/itvmain">-->
-<!--					<template slot="title">选项4</template>-->
-<!--					<el-menu-item index="/itvmain">选项1</el-menu-item>-->
-<!--					<el-menu-item index="/itvmain">选项2</el-menu-item>-->
-<!--					<el-menu-item index="/itvmain">选项3</el-menu-item>-->
-<!--				</el-submenu>-->
 			</el-submenu>
 			<el-menu-item index="/welcome">分享平台</el-menu-item>
 			<el-menu-item index="/dbmain">数据基础平台</el-menu-item>
@@ -20,7 +15,7 @@
 			</el-tooltip>
 		</el-menu>
 		<el-container>
-			<el-main style="height: 100%;margin: 0 100px;padding: 0;border: 0;">
+			<el-main style="height: 890px;margin: 0 100px;padding: 0;border: 0;">
 				<router-view></router-view>
 			</el-main>
 		</el-container>

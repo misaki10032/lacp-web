@@ -14,6 +14,7 @@ import itv_main from "../views/interview/main"
 import itvexamdef from "../views/interview/examDefManage/exam"
 import botmsg_v from "../views/basicDatebase/botMsgView/botmsg.vue"
 import newsheadlines_v from "../views/basicDatebase/botMsgView/newsHeadlines.vue"
+import index from "../views/indexView/index.vue"
 
 Vue.use(router)
 var rout = new router({
@@ -23,9 +24,15 @@ var rout = new router({
         component: login
     }, {
         path: '/welcome',
+        redirect:"/index",
         name: 'basicmain',
         component: basicmain,
-        children: []
+        children: [
+            {
+                path: "/index",
+                component: index
+            }
+        ]
     }, {
         path: '/dbmain',
         name: 'dbmain',
@@ -34,7 +41,7 @@ var rout = new router({
         children: [{
             path: "/mainlist",
             component: mainlist
-        },
+            },
             {
                 path: "/console",
                 component: console_v
