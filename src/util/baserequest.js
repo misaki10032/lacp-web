@@ -9,6 +9,14 @@ const axios = axiosBase.create({
         'X-Requested-With': 'XMLHttpRequest'
     }
 })
+const axios_sso = axiosBase.create({
+    timeout: 10000 * 12,
+    baseURL: "http://124.222.34.234:27313/api",
+    // baseURL: "http://localhost:27313/api",
+    headers: {
+        'X-Requested-With': 'XMLHttpRequest'
+    }
+})
 const axios_interview = axiosBase.create({
     timeout: 10000 * 12,
     baseURL: "http://124.222.34.234:27315/api/lacp",
@@ -29,6 +37,18 @@ axios.interceptors.response.use((res) => {
     return res;
 });
 
+axios_sso.interceptors.request.use(config => {
+    config.headers.token = window.sessionStorage.getItem('token');
+    return config;
+})
+
+axios_sso.interceptors.response.use((res) => {
+    if (res.data.message == 'session失效') {
+        router.replace("/login");
+    }
+    return res;
+});
+
 axios_interview.interceptors.request.use(config => {
     config.headers.token = window.sessionStorage.getItem('token');
     return config;
@@ -41,4 +61,4 @@ axios_interview.interceptors.response.use((res) => {
     return res;
 });
 
-export {axios, axios_interview}
+export {axios, axios_interview, axios_sso}

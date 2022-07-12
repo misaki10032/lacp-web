@@ -5,11 +5,14 @@ import VueCookies from 'vue-cookies'
 import 'element-ui/lib/theme-chalk/index.css'
 import router from './router'
 import {axios} from '@/util/baserequest'
+import {axios_sso} from '@/util/baserequest'
 import {axios_interview} from '@/util/baserequest'
 
 
 Vue.prototype.$axios = axios
 Vue.prototype.$axiositv = axios_interview
+Vue.prototype.$axiosSso = axios_sso
+
 Vue.config.productionTip = false
 Vue.use(VueCookies)
 Vue.use(ElementUI);

@@ -9,21 +9,31 @@
 			<!-- 表单区域表单数据绑定-->
 			<el-form :model="loginForm" class="login_form">
 				<el-form-item>
-					<el-input v-model="loginForm.num" placeholder="请输入账号" prefix-icon="iconfont icon-yonghu">
+					<el-input v-model="loginForm.email" placeholder="请输入邮箱" prefix-icon="iconfont icon-yonghu">
 					</el-input>
 				</el-form-item>
 
 				<el-form-item>
-					<el-input v-model="loginForm.pwd" placeholder="请输入密码" prefix-icon="iconfont icon-mima"
+					<el-input v-model="loginForm.password" placeholder="请输入密码" prefix-icon="iconfont icon-mima"
 						type="password">
 					</el-input>
 				</el-form-item>
 
 				<el-form-item class="btn_box">
 					<el-button type="primary" @click="login">登录</el-button>
+					<el-button type="warning" @click="dialogFormVisible = true">注册</el-button>
 				</el-form-item>
 			</el-form>
 		</div>
+		<el-dialog title="注册信息" :visible.sync="dialogFormVisible" width="30rem">
+				<el-input v-model="reUser.uemail" placeholder="邮箱" clearable></el-input>
+				<el-input v-model="reUser.uphone" placeholder="手机号" clearable></el-input>
+				<el-input v-model="reUser.upassword" placeholder="密码" clearable></el-input>
+				<div slot="footer" class="dialog-footer">
+					<el-button @click="dialogFormVisible = false">取 消</el-button>
+					<el-button type="primary" @click="addUser()">确 定</el-button>
+				</div>
+		</el-dialog>
 	</div>
 
 </template>
@@ -33,9 +43,24 @@
 		data() {
 			return {
 				loginForm: {
-					num: "",
-					pwd: ""
-				}
+					email: "",
+					password: ""
+				},
+				loginUser : {
+					"createTime": "",
+					"email": "",
+					"id": "",
+					"mobile": "",
+					"password": "",
+					"ssoId": "",
+					"updateTime": ""
+				},
+				reUser: {
+					uemail:"",
+					uphone:"",
+					upassword:""
+				},
+				dialogFormVisible: false,
 			}
 		},
 		mounted() {
@@ -44,13 +69,44 @@
 		methods: {
 			//登录
 			login() {
-
-				var myDate = new Date(new Date().getTime() + 6 * 60 * 60 * 1000);
-				var adminId = this.loginForm.num;
-				var lastTime = myDate.toLocaleString();
-				var tokenVal = "sso_uid="+adminId+";lastTime="+lastTime
-				window.sessionStorage.setItem("token", tokenVal);
-				this.$router.push("/welcome");
+				var that = this;
+				this.$axiosSso.post("/user/login?email="+that.loginForm.email+"&password="+that.loginForm.password).then(function (res) {
+					if (res.data.status == "ok") {
+						that.loginUser = res.data.data;
+						var myDate = new Date(new Date().getTime() + 6 * 60 * 60 * 1000);
+						var ssoId = that.loginUser.ssoId;
+						var lastTime = myDate.toLocaleString();
+						var tokenVal = "sso_uid="+ssoId+";lastTime="+lastTime
+						window.sessionStorage.setItem("token", tokenVal);
+						that.$router.push("/welcome");
+					} else {
+						that.$notify.error({
+							title: '账号或密码错误',
+							message: res.data.message
+						});
+					}
+				})
+			},
+			addUser(){
+				var that = this;
+				this.$axiosSso.post("/user/regist?email="+that.reUser.uemail+"&password="+that.reUser.upassword+"&mobile="+that.reUser.uphone).then(function (res) {
+					if (res.data.status == "ok") {
+						that.$notify({
+							title: '注册成功',
+							message: "邮箱-" + that.reUser.uemail,
+							type: 'success'
+						});
+						that.reUser.uemail = "";
+						that.reUser.upassword = "";
+						that.reUser.uphone = "";
+						that.dialogFormVisible = false;
+					} else {
+						that.$notify.error({
+							title: res.data.status,
+							message: res.data.message
+						});
+					}
+				})
 			}
 		}
 	}
