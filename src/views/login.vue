@@ -53,6 +53,7 @@
 					"mobile": "",
 					"password": "",
 					"ssoId": "",
+					"userRole": "",
 					"updateTime": ""
 				},
 				reUser: {
@@ -78,6 +79,7 @@
 						var lastTime = myDate.toLocaleString();
 						var tokenVal = "sso_uid="+ssoId+";lastTime="+lastTime
 						window.sessionStorage.setItem("token", tokenVal);
+						window.sessionStorage.setItem("userRole", that.loginUser.userRole);
 						that.$router.push("/welcome");
 					} else {
 						that.$notify.error({

@@ -9,7 +9,7 @@
 				<el-menu-item index="/itvmain">面试管理</el-menu-item>
 			</el-submenu>
 			<el-menu-item index="/welcome">分享平台</el-menu-item>
-			<el-menu-item index="/dbmain">数据基础平台</el-menu-item>
+			<el-menu-item v-if="userRole == 1" index="/dbmain">数据基础平台</el-menu-item>
 			<el-tooltip class="item" content="退出登录" effect="dark" placement="bottom">
 				<el-menu-item @click="logOut">退出</el-menu-item>
 			</el-tooltip>
@@ -26,7 +26,8 @@
 		data() {
 			return {
 				activeIndex: '1',
-				activeIndex2: '1'
+				activeIndex2: '1',
+				userRole: sessionStorage.getItem("userRole")
 			};
 		},
 		methods: {
