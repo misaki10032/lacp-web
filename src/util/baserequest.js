@@ -3,8 +3,8 @@ import router from "@/router"
 
 const axios = axiosBase.create({
     timeout: 10000 * 12,
-    baseURL: "http://124.222.34.234:27314/api",
-    // baseURL: "http://localhost:27314/api",
+    // baseURL: "http://124.222.34.234:27314/api",
+    baseURL: "http://localhost:27314/api",
     headers: {
         'X-Requested-With': 'XMLHttpRequest'
     }

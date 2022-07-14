@@ -1,9 +1,13 @@
 <template>
     <div>
         <el-row :gutter="10">
-            <el-col :span="16" offset="1">
+            <el-col :span="16" :offset="1">
                 <div class="bg-green">
-                    <el-skeleton :rows="22" />
+                    <el-input type="textarea" :rows="2" placeholder="编写你的Java代码"
+                        :autosize="{ minRows: 22, maxRows: 22 }" v-model="javaCode"></el-input>
+                    <el-button style="margin-top: 10px;" type="primary" plain @click="execute()">执行</el-button>
+                    <el-input type="textarea" :rows="2" placeholder="结果" disabled :autosize="{ minRows: 9, maxRows: 9 }"
+                        v-model="res"></el-input>
                 </div>
             </el-col>
             <el-col :span="6">
@@ -16,12 +20,15 @@
                             <el-table :data="newsHeadlines" :stripe="true" size="mini">
                                 <el-table-column :show-overflow-tooltip='true' label="头条" width="200">
                                     <template slot-scope="scope">
-                                        <el-link type="danger" @click="toWebo(scope.row.hTitle)">{{ scope.row.hTitle }}</el-link>
+                                        <el-link type="danger" @click="toWebo(scope.row.hTitle)">{{ scope.row.hTitle }}
+                                        </el-link>
                                     </template>
                                 </el-table-column>
                                 <el-table-column label="排行" width="50">
                                     <template slot-scope="scope">
-                                        <el-tag v-if="scope.row.hId != '置顶'" size="mini"><i class="el-icon-medal"></i>{{scope.row.hId}}</el-tag>
+                                        <el-tag v-if="scope.row.hId != '置顶'" size="mini"><i class="el-icon-medal"></i>{{
+                                                scope.row.hId
+                                        }}</el-tag>
                                         <el-tag v-if="scope.row.hId == '置顶'" size="mini">{{ "置顶" }}</el-tag>
                                     </template>
                                 </el-table-column>
@@ -30,7 +37,8 @@
                                         <el-tag size="mini" v-if="scope.row.hId != '置顶'" effect="danger">
                                             <i class="el-icon-data-line"></i>{{ scope.row.hHot }}
                                         </el-tag>
-                                        <el-tag size="mini" v-if="scope.row.hId == '置顶'" effect="danger">{{ "置顶" }}</el-tag>
+                                        <el-tag size="mini" v-if="scope.row.hId == '置顶'" effect="danger">{{ "置顶" }}
+                                        </el-tag>
                                     </template>
                                 </el-table-column>
                             </el-table>
@@ -45,7 +53,9 @@
 export default {
     data() {
         return {
-            newsHeadlines: []
+            newsHeadlines: [],
+            javaCode: "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"i am you father\");\n    }\n}",
+            res: ""
         };
     },
     mounted() {
@@ -63,6 +73,20 @@ export default {
         toWebo(s) {
             var link = "https://s.weibo.com/weibo?q=" + encodeURIComponent(s) + "&Refer=top"
             window.open(link)
+        },
+        execute() {
+            var that = this;
+            console.log(this.javaCode)
+            this.$axios.post("/tools/java/run", this.javaCode , {
+                headers: { 'Content-Type': 'application/json' }
+            }).then(function (res) {
+                if (res.data.compileRes == "编译成功") {
+                    that.res = res.data.runRes;
+                } else {
+                    that.res = res.data.errorDiagnosticMsg;
+                }
+
+            })
         }
 
     }
