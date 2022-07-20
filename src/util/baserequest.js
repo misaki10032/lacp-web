@@ -20,6 +20,7 @@ const axios_sso = axiosBase.create({
 const axios_interview = axiosBase.create({
     timeout: 10000 * 12,
     baseURL: "http://124.222.34.234:27315/api/lacp",
+    // baseURL: "http://localhost:27315/api/lacp",
     headers: {
         'X-Requested-With': 'XMLHttpRequest'
     }
@@ -56,6 +57,10 @@ axios_interview.interceptors.request.use(config => {
 
 axios_interview.interceptors.response.use((res) => {
     if (res.data.message == 'session失效') {
+        router.replace("/login");
+    }
+    if (res.data.message == 'token失效') {
+        alert(res.data.message)
         router.replace("/login");
     }
     return res;
