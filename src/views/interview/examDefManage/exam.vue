@@ -8,7 +8,7 @@
         <div>
             <el-input v-model="form.search" placeholder="请输入题名" @change="findLabelList(1, 10)"
                       style="width: 18.75rem;margin-right: 20px;" clearable></el-input>
-            <el-button type="primary" v-if="ssocontrol" @click="dialogFormVisible = true">新增题库</el-button>
+            <el-button type="primary" v-if="ssocontrol" @click="openDialog()">新增题库</el-button>
         </div>
         <div>
             <el-table v-loading="this.labels.length > 0 ? false : true" element-loading-text="拼命加载中"
@@ -63,8 +63,8 @@
                 <el-form-item label="题库类型" required>
                     <el-select style="width: 310px;" multiple filterable clearable collapse-tags v-model="values"
                                placeholder="请选择">
-                        <el-option v-for="item in options" :key="item.value" :label="item.label"
-                                   :value="item.value"></el-option>
+                        <el-option v-for="item in options" :key="item.id" :label="item.labelName"
+                                   :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item required label="是否显示">
@@ -84,7 +84,8 @@
 </template>
 
 <script>
-import { Loading } from 'element-ui';
+
+    import {Loading} from 'element-ui';
 
     export default {
         data() {
@@ -129,6 +130,7 @@ import { Loading } from 'element-ui';
         },
         mounted() {
             this.findLabelList(1, this.pageInfo.pageSize);
+            this.queryLabel();
         },
         methods: {
             findLabelList(page, limit) {
@@ -147,16 +149,16 @@ import { Loading } from 'element-ui';
                 })
             },
             handleSizeChange(val) {
-                let load = Loading.service({ text: "拼命删除中...", fullscreen: false });
+                let load = Loading.service({text: "拼命删除中...", fullscreen: false});
                 this.pageInfo.pageSize = val;
                 this.findLabelList(this.pageInfo.pageNum, this.pageInfo.pageSize);
                 load.close()
             },
             handleCurrentChange(val) {
-                let load = Loading.service({ text: "拼命删除中...", fullscreen: false });
+                let load = Loading.service({text: "拼命删除中...", fullscreen: false});
                 this.pageInfo.pageNum = val;
                 this.findLabelList(this.pageInfo.pageNum, this.pageInfo.pageSize);
-                 load.close()
+                load.close()
             },
             changeAble(row) {
                 this.$axiositv.post("/edc/updateExam", {
@@ -166,7 +168,7 @@ import { Loading } from 'element-ui';
                     showAble: row.showAble,
                     enAble: row.enAble
                 }).then(res => {
-                      let load = Loading.service({ text: "拼命更新中...", fullscreen: false });
+                    let load = Loading.service({text: "拼命更新中...", fullscreen: false});
                     if (res.data.responseState === 200) {
                         this.$notify({
                             title: '更新成功',
@@ -189,7 +191,7 @@ import { Loading } from 'element-ui';
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                   let load = Loading.service({ text: "拼命删除中...", fullscreen: false });
+                    let load = Loading.service({text: "拼命删除中...", fullscreen: false});
                     this.$axiositv.get("/edc/deleteExam/" + row.refpk).then(res => {
                         if (res.data.responseState === 200) {
                             this.$notify({
@@ -231,7 +233,7 @@ import { Loading } from 'element-ui';
                     showAble: this.showAble,
                     enAble: this.enAble
                 }).then(res => {
-                    let load = Loading.service({ text: "拼命创建中...", fullscreen: false });
+                    let load = Loading.service({text: "拼命创建中...", fullscreen: false});
                     if (res.data.responseState === 200) {
                         this.$notify({
                             title: '新建成功',
@@ -249,6 +251,15 @@ import { Loading } from 'element-ui';
                         });
                     }
                     load.close()
+                })
+            },
+            openDialog() {
+                this.dialogFormVisible = true
+                this.queryLabel()
+            },
+            queryLabel() {
+                this.$axios.get("/label/list/1").then(res => {
+                    this.options = res.data.data
                 })
             }
         }
