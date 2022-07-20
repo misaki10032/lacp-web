@@ -1,5 +1,6 @@
 import axiosBase from 'axios'
 import router from "@/router"
+import {MessageBox} from 'element-ui'
 
 const axios = axiosBase.create({
     timeout: 10000 * 12,
@@ -31,10 +32,24 @@ axios.interceptors.request.use(config => {
     return config;
 })
 
-axios.interceptors.response.use((res) => {
-    if (res.data.message == 'session失效') {
-        router.replace("/login");
+function fail(res) {
+    if (res.data.message == 'session失效' || res.data.message == 'token失效') {
+        MessageBox.confirm("用户未登录或登录信息有误，即将跳转至登录页面!", "退出警告", {
+            showClose: false,
+            showCancelButton: false,
+            confirmButtonText: "知道啦",
+            type: "warning",
+            distinguishCancelAndClose: true
+        }).then(() => {
+            router.replace("/login");
+        }).catch(() => {
+            router.replace("/login");
+        })
     }
+}
+
+axios.interceptors.response.use((res) => {
+    fail(res)
     return res;
 });
 
@@ -44,9 +59,7 @@ axios_sso.interceptors.request.use(config => {
 })
 
 axios_sso.interceptors.response.use((res) => {
-    if (res.data.message == 'session失效') {
-        router.replace("/login");
-    }
+    fail(res)
     return res;
 });
 
@@ -56,13 +69,7 @@ axios_interview.interceptors.request.use(config => {
 })
 
 axios_interview.interceptors.response.use((res) => {
-    if (res.data.message == 'session失效') {
-        router.replace("/login");
-    }
-    if (res.data.message == 'token失效') {
-        alert(res.data.message)
-        router.replace("/login");
-    }
+    fail(res)
     return res;
 });
 
