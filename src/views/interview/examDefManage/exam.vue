@@ -36,7 +36,7 @@
                                    v-model="scope.row.enAble"></el-switch>
                     </template>
                 </el-table-column>
-                <el-table-column label="修改人" prop="values.modifier.value" width="200"
+                <el-table-column label="修改人" prop="values.modifier.value" width="auto"
                                  :sortable="true"></el-table-column>
                 <el-table-column label="修改日期" prop="values.modifiedTime.value" width="200"
                                  :sortable="true"></el-table-column>
@@ -158,7 +158,6 @@
                     labelPk: row.values.label.value,
                     title: row.refname,
                     showAble: row.showAble,
-                    modifier: window.sessionStorage.getItem("sso_uid"),
                     enAble: row.enAble
                 }).then(res => {
                     if (res.data.responseState === 200) {
