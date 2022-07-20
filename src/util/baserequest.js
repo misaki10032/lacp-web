@@ -21,7 +21,7 @@ const axios_sso = axiosBase.create({
 const axios_interview = axiosBase.create({
     timeout: 10000 * 12,
     baseURL: "http://124.222.34.234:27315/api/lacp",
-    // baseURL: "http://localhost:27315/api/lacp",
+    //baseURL: "http://localhost:27315/api/lacp",
     headers: {
         'X-Requested-With': 'XMLHttpRequest'
     }
@@ -33,7 +33,7 @@ axios.interceptors.request.use(config => {
 })
 
 function fail(res) {
-    if (res.data.message == 'session失效' || res.data.message == 'token失效') {
+    if (res.data.message == 'session失效') {
         MessageBox.confirm("用户未登录或登录信息有误，即将跳转至登录页面!", "退出警告", {
             showClose: false,
             showCancelButton: false,
