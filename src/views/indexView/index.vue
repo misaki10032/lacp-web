@@ -3,8 +3,9 @@
         <el-row :gutter="10">
             <el-col :span="16" :offset="1">
                 <div class="bg-green">
-                    <el-input type="textarea" :rows="2" placeholder="编写你的Java代码"
-                        :autosize="{ minRows: 22, maxRows: 22 }" v-model="javaCode"></el-input>
+                    <div id="monaco-editor" style="height:450px;border:2px solid #d9cfcf;">{{ editor.value }}</div>
+                    <!-- <el-input type="textarea" :rows="2" placeholder="编写你的Java代码"
+                        :autosize="{ minRows: 22, maxRows: 22 }" v-model="javaCode"></el-input> -->
                     <el-button style="margin-top: 10px;" type="primary" plain @click="execute()">执行</el-button>
                     <el-input type="textarea" :rows="2" placeholder="结果" disabled :autosize="{ minRows: 9, maxRows: 9 }"
                         v-model="res"></el-input>
@@ -13,12 +14,9 @@
             <el-col :span="6">
                 <div class="bg-green">
                     <el-card class="box-card" style="padding-bottom:25px">
-                        <div slot="header" class="clearfix">
-                            <span>小时热度新闻(小时刷新)</span>
-                        </div>
                         <div>
                             <el-table :data="newsHeadlines" :stripe="true" size="mini">
-                                <el-table-column :show-overflow-tooltip='true' label="头条" width="200">
+                                <el-table-column :show-overflow-tooltip='true' label="头条内容(小时刷新)" width="200">
                                     <template slot-scope="scope">
                                         <el-link type="danger" @click="toWebo(scope.row.hTitle)">{{ scope.row.hTitle }}
                                         </el-link>
@@ -50,16 +48,26 @@
     </div>
 </template>
 <script>
+import * as monaco from 'monaco-editor'
 export default {
     data() {
         return {
             newsHeadlines: [],
             javaCode: "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"i am you father\");\n    }\n}",
-            res: ""
+            res: "",
+            editor: {}
         };
     },
     mounted() {
         this.getNowNewHeadlines();
+        this.editor = monaco.editor.create(document.getElementById('monaco-editor'), {
+			value:  '// 请在下方输入您的java语句 \n' 
+					+'// 编辑器暂不支持复杂的工具类操作 \n'
+					+'// 示例：\n'
+                    +'public class Main {\n    public static void main(String[] args) {\n        System.out.println("i am you father");\n    }\n}',
+			language: 'java',
+			automaticLayout: true
+		})
     },
     methods: {
         getNowNewHeadlines() {
@@ -77,6 +85,7 @@ export default {
         execute() {
             var that = this;
             console.log(this.javaCode)
+            this.javaCode = this.editor.getValue();
             this.$axios.post("/tools/java/run", this.javaCode , {
                 headers: { 'Content-Type': 'application/json' }
             }).then(function (res) {
