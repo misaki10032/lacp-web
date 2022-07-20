@@ -84,6 +84,8 @@
 </template>
 
 <script>
+import { Loading } from 'element-ui';
+
     export default {
         data() {
             return {
@@ -112,7 +114,7 @@
                     label: 'mysql'
                 }, {
                     value: '3',
-                    label: 'python'
+                    label: 'html'
                 }, {
                     value: '4',
                     label: 'python'
@@ -145,12 +147,16 @@
                 })
             },
             handleSizeChange(val) {
+                let load = Loading.service({ text: "拼命删除中...", fullscreen: false });
                 this.pageInfo.pageSize = val;
                 this.findLabelList(this.pageInfo.pageNum, this.pageInfo.pageSize);
+                load.close()
             },
             handleCurrentChange(val) {
+                let load = Loading.service({ text: "拼命删除中...", fullscreen: false });
                 this.pageInfo.pageNum = val;
                 this.findLabelList(this.pageInfo.pageNum, this.pageInfo.pageSize);
+                 load.close()
             },
             changeAble(row) {
                 this.$axiositv.post("/edc/updateExam", {
@@ -160,6 +166,7 @@
                     showAble: row.showAble,
                     enAble: row.enAble
                 }).then(res => {
+                      let load = Loading.service({ text: "拼命更新中...", fullscreen: false });
                     if (res.data.responseState === 200) {
                         this.$notify({
                             title: '更新成功',
@@ -173,6 +180,7 @@
                             message: res.data.responseMessage
                         });
                     }
+                    load.close()
                 })
             },
             handleDelete(index, row) {
@@ -181,6 +189,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
+                   let load = Loading.service({ text: "拼命删除中...", fullscreen: false });
                     this.$axiositv.get("/edc/deleteExam/" + row.refpk).then(res => {
                         if (res.data.responseState === 200) {
                             this.$notify({
@@ -197,6 +206,7 @@
                             });
                         }
                     })
+                    load.close()
                 }).catch(() => {
                     this.$message({
                         type: 'info',
@@ -221,6 +231,7 @@
                     showAble: this.showAble,
                     enAble: this.enAble
                 }).then(res => {
+                    let load = Loading.service({ text: "拼命创建中...", fullscreen: false });
                     if (res.data.responseState === 200) {
                         this.$notify({
                             title: '新建成功',
@@ -237,6 +248,7 @@
                             message: res.data.message
                         });
                     }
+                    load.close()
                 })
             }
         }
