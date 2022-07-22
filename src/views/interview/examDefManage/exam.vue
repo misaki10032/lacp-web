@@ -178,7 +178,7 @@
                         this.findLabelList(this.pageInfo.pageNum, this.pageInfo.pageSize);
                     } else {
                         this.$notify.error({
-                            title: '更新成功',
+                            title: '更新失败',
                             message: res.data.responseMessage
                         });
                     }
