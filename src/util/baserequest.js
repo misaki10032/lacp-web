@@ -33,7 +33,7 @@ axios.interceptors.request.use(config => {
 })
 
 function fail(res) {
-    if (res.data.message == 'session失效' || res.data.message == 'token失效') {
+    if (res.data.message == 'session失效') {
         MessageBox.confirm("用户未登录或登录信息有误，即将跳转至登录页面!", "退出警告", {
             showClose: false,
             showCancelButton: false,
