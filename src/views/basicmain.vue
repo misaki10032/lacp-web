@@ -40,7 +40,7 @@ export default {
 			this.$router.push("/login");
 		},
 		toScheduing() {
-			window.open("http://124.222.34.234:27316/xxl-job-admin/")
+			window.location.assign("http://124.222.34.234:27316/xxl-job-admin/")
 		}
 	}
 }
