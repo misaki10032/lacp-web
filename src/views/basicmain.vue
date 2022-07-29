@@ -11,6 +11,7 @@
 			<el-menu-item index="/welcome">分享平台</el-menu-item>
 			<el-menu-item v-if="userRole == 1" index="/dbmain">数据管理</el-menu-item>
 			<el-menu-item @click="toScheduing()">任务调度</el-menu-item>
+			<el-menu-item @click="toSuperset()">BI看板(Superset)</el-menu-item>
 			<el-tooltip class="item" content="退出登录" effect="dark" placement="bottom">
 				<el-menu-item @click="logOut">退出</el-menu-item>
 			</el-tooltip>
@@ -48,6 +49,16 @@ export default {
 			document.cookie = time
 			// alert(document.cookie)
 			window.location.href = "http://124.222.34.234:27316/xxl-job-admin/";
+		},
+		toSuperset() {
+			// window.location.assign("http://124.222.34.234:27316/xxl-job-admin/")
+			var coo = window.sessionStorage.getItem('token')
+			var uid = coo.split(";")[0]
+			var time = coo.split(";")[1]
+			document.cookie = uid
+			document.cookie = time
+			// alert(document.cookie)
+			window.location.href = "http://124.70.29.10:27317/superset/welcome/";
 		}
 	}
 }
