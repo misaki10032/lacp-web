@@ -166,15 +166,11 @@
                     labelPk: row.values.label.value,
                     title: row.refname,
                     showAble: row.showAble,
-                    enAble: row.enAble
+                    enAble: row.enAble,
+                    modifier: window.sessionStorage.getItem("token").toString().split(";")[0].split("=")[1]
                 }).then(res => {
                     let load = Loading.service({text: "拼命更新中...", fullscreen: false});
                     if (res.data.responseState === 200) {
-                        this.$notify({
-                            title: '更新成功',
-                            message: "更新-" + row.refname,
-                            type: 'success'
-                        });
                         this.findLabelList(this.pageInfo.pageNum, this.pageInfo.pageSize);
                     } else {
                         this.$notify.error({
@@ -183,6 +179,11 @@
                         });
                     }
                     load.close()
+                    this.$notify({
+                        title: '更新成功',
+                        message: "更新-" + row.refname,
+                        type: 'success'
+                    });
                 })
             },
             handleDelete(index, row) {
@@ -231,7 +232,8 @@
                     labelPk: labekPk,
                     title: this.title,
                     showAble: this.showAble,
-                    enAble: this.enAble
+                    enAble: this.enAble,
+                    modifier: window.sessionStorage.getItem("token").toString().split(";")[0].split("=")[1]
                 }).then(res => {
                     let load = Loading.service({text: "拼命创建中...", fullscreen: false});
                     if (res.data.responseState === 200) {
